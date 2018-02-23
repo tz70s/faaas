@@ -1,2 +1,3 @@
-# tiny-invoker
-Fast invoker with IPC, POC project.
+# Tiny invoker
+
+Experiment a fast invoker with IPC.
