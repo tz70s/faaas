@@ -6,13 +6,18 @@ extern crate tokio_core;
 extern crate futures;
 extern crate hyper;
 extern crate serde_json;
+extern crate uuid;
 
 mod controller;
 mod uds_handler;
-
-use tokio_core::reactor::Core;
+mod runtime_fs;
 
 fn main() {
     println!("Launch a tiny-invoker!");
+
+    // Mount runtime fs
+    runtime_fs::clean_up();
+    runtime_fs::create_runtime_fs();
+    runtime_fs::mount_nodejs_v8();
     controller::launch("127.0.0.1:3000");
 }

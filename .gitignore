@@ -13,3 +13,5 @@ Cargo.lock
 
 # Node.js ignore
 node_modules/
+
+tmp/
