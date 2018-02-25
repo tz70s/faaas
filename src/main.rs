@@ -4,19 +4,15 @@
 extern crate tokio_uds;
 extern crate tokio_core;
 extern crate futures;
+extern crate hyper;
+extern crate serde_json;
 
+mod controller;
 mod uds_handler;
 
 use tokio_core::reactor::Core;
 
 fn main() {
-    println!("Hello world!");
-
-    let mut core = Core::new().unwrap();
-
-    static SOCKET_PATH: &'static str = "invoker.sock";
-
-    let mut u_handler = uds_handler::UdsHandler::new(SOCKET_PATH, &mut core);
-
-    u_handler.launch();
+    println!("Launch a tiny-invoker!");
+    controller::launch("127.0.0.1:3000");
 }
