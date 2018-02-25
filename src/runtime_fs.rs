@@ -49,7 +49,7 @@ pub fn mount_nodejs_v8() {
 pub fn mount_language_codes(id: &Uuid, content: &str) {
     let directory = format!("{}/{}/{}", RUNTIME_FS, LanguageRuntimeFs::NodeJsV8.to_str(), id);
     fs::create_dir(&directory);
-    let mut file = File::create(format!("{}/{}.js", directory, id)).unwrap();
+    let mut file = File::create(format!("{}/index.js", directory)).unwrap();
     file.write_all(content.as_ref());
 }
 

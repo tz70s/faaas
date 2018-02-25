@@ -2,5 +2,11 @@
 // Copyright (c) 2018 Tzu-Chiao Yeh
 
 module.exports = (param, context) => {
-  return { message: 'Hello world!' };
+  let returnObj;
+  if (param && param.name) {
+    returnObj = { message: `Hello ${param.name}!` };
+  } else {
+    returnObj = { message: 'Hello world!' };
+  }
+  return returnObj;
 }

@@ -1,0 +1,21 @@
+{
+  "name": "action_runtime_node_js_v8",
+  "version": "0.1.0",
+  "description": "action runtime",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Action",
+    "runtime",
+    "of",
+    "node.js"
+  ],
+  "author": "Tzu-Chiao Yeh",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2"
+  }
+}

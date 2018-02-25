@@ -5,6 +5,7 @@ extern crate tokio_uds;
 extern crate tokio_core;
 extern crate futures;
 extern crate hyper;
+#[macro_use]
 extern crate serde_json;
 extern crate uuid;
 
