@@ -1,6 +1,8 @@
 // The tiny-invoker project is under MIT License.
 // Copyright (c) 2018 Tzu-Chiao Yeh
 
+'use strict';
+
 const Function = require('./tinyctl/function');
 const launchCLI = require('./tinyctl/cli_parser');
 const deploy = require('./tinyctl/request_handler');

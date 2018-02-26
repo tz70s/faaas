@@ -11,14 +11,15 @@ extern crate uuid;
 
 mod controller;
 mod uds_handler;
-mod runtime_fs;
+mod action_fs;
+mod action;
 
 fn main() {
     println!("Launch a tiny-invoker!");
 
     // Mount runtime fs
-    runtime_fs::clean_up();
-    runtime_fs::create_runtime_fs();
-    runtime_fs::mount_nodejs_v8();
+    action_fs::clean_up();
+    action_fs::create_runtime_fs();
+    action_fs::mount_nodejs_v8();
     controller::launch("127.0.0.1:3000");
 }

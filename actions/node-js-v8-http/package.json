@@ -1,16 +1,13 @@
 {
-  "name": "action_runtime_node_js_v8",
+  "name": "action_runtime_node_js_v8_http",
   "version": "0.1.0",
-  "description": "action runtime",
+  "description": "action runtime of node.js in http req/resp",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "Action",
-    "runtime",
-    "of",
-    "node.js"
+    "Serverless"
   ],
   "author": "Tzu-Chiao Yeh",
   "license": "MIT",
