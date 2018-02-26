@@ -1,0 +1,18 @@
+{
+  "name": "action_runtime_node_js_v8_uds",
+  "version": "0.1.0",
+  "description": "Action runtime of node.js with unix domain socket.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Serverless"
+  ],
+  "author": "Tzu-Chiao Yeh",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+  }
+}

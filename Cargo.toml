@@ -1,5 +1,5 @@
 [package]
-name = "invoker"
+name = "faaas"
 version = "0.1.0"
 authors = ["tz70s <su3g4284zo6y7@gmail.com>"]
 

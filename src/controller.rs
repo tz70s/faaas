@@ -1,8 +1,9 @@
-// The tiny-invoker project is under MIT License.
+// The faaas project is under MIT License.
 // Copyright (c) 2018 Tzu-Chiao Yeh
 
 use hyper::server::{Http, Service};
 use hyper::{StatusCode, Body, Client, Get, Post, Request, Response, Error};
+use tokio_core::reactor::Handle;
 use hyper;
 use futures;
 use futures::{Stream, Future};
@@ -20,14 +21,17 @@ pub struct FunctionMeta {
 
 struct Controller {
     client: hyper::Client<hyper::client::HttpConnector, Body>,
+    handle: Handle,
     function_metas: Arc<RwLock<HashMap<Uuid, FunctionMeta>>>,
 }
 
 impl Controller {
     fn new(client: hyper::Client<hyper::client::HttpConnector, Body>,
+           handle: Handle,
            function_metas: Arc<RwLock<HashMap<Uuid, FunctionMeta>>>) -> Self {
         Controller {
             client,
+            handle,
             function_metas
         }
     }
@@ -77,6 +81,7 @@ impl Service for Controller {
                                               self.client.clone()),
             // Invoke an endpoint/function
             _ if &req.path()[0..10] == "/endpoint/" => action::get_endpoint(req, &self.client),
+            _ if &req.path()[0..14] == "/uds-endpoint/" => action::get_uds_endpoint(req, self.handle.clone()),
             // 400
             _ => bad_request()
         }
@@ -88,13 +93,14 @@ pub fn launch(addr_str: &str) {
     let mut core = tokio_core::reactor::Core::new().unwrap();
     let handle = core.handle();
     let client_handle = core.handle();
+    let uds_handle = core.handle();
     let client = Client::configure().build(&client_handle);
     let function_metas = RwLock::new(HashMap::new());
     let arc = Arc::new(function_metas);
 
     let serve = Http::new()
-        .serve_addr_handle(&addr, &handle, move || Ok(Controller::new(client.clone(), arc.clone()))).unwrap();
-    println!("Listening on http://{} with 1 thread.", serve.incoming_ref().local_addr());
+        .serve_addr_handle(&addr, &handle, move || Ok(Controller::new(client.clone(), uds_handle.clone(), arc.clone()))).unwrap();
+    println!("Listening on http://{}", serve.incoming_ref().local_addr());
 
     let h2 = handle.clone();
     handle.spawn(serve.for_each(move |conn| {

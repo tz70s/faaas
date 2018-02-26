@@ -1,4 +1,4 @@
-// The tiny-invoker project is under MIT License.
+// The faaas project is under MIT License.
 // Copyright (c) 2018 Tzu-Chiao Yeh
 
 extern crate tokio_uds;
@@ -10,13 +10,10 @@ extern crate serde_json;
 extern crate uuid;
 
 mod controller;
-mod uds_handler;
 mod action_fs;
 mod action;
 
 fn main() {
-    println!("Launch a tiny-invoker!");
-
     // Mount runtime fs
     action_fs::clean_up();
     action_fs::create_runtime_fs();

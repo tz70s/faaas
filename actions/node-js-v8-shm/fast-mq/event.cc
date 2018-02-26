@@ -1,3 +1,6 @@
+// The faaas project is under MIT License.
+// Copyright (c) 2018 Tzu-Chiao Ye
+
 #include <node.h>
 #include <v8.h>
 
