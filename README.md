@@ -2,7 +2,7 @@
 
 Experiment a fast invoker with various ways.
 
-### Benchmark
+## Benchmark
 
 The collected statistics is under wrk as http benchmarking.
 
@@ -81,6 +81,6 @@ Requests/sec
   5819.30
 ```
 
-### License
+## License
 
-MIT License.
+This project is licensed under MIT license. ([LICENSE MIT](https://github.com/tz70s/tiny-invoker/blob/master/LICENSE) or http://opensource.org/licenses/MIT)

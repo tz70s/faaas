@@ -14,4 +14,8 @@ Cargo.lock
 # Node.js ignore
 node_modules/
 
+# Temporary folder for storing functions
 tmp/
+
+# node-gyp
+build/
