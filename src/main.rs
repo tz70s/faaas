@@ -1,17 +1,19 @@
 // The faaas project is under MIT License.
 // Copyright (c) 2018 Tzu-Chiao Yeh
 
-extern crate tokio_uds;
-extern crate tokio_core;
 extern crate futures;
+extern crate futures_cpupool;
 extern crate hyper;
 #[macro_use]
 extern crate serde_json;
+extern crate tokio_core;
+extern crate tokio_uds;
 extern crate uuid;
 
 mod controller;
 mod action_fs;
 mod action;
+mod config;
 
 fn main() {
     // Mount runtime fs

@@ -5,14 +5,16 @@ use std::fs;
 use uuid::Uuid;
 use std::fs::File;
 use std::io::prelude::*;
+use config::RUNTIME_DIRECTORY;
 
+#[allow(dead_code)]
 enum LanguageRuntime {
     NodeJsV6,
     NodeJsV8,
     PythonV2,
     PythonV3,
     JavaV8,
-    DynamicLibrary
+    DynamicLibrary,
 }
 
 impl LanguageRuntime {
@@ -23,31 +25,38 @@ impl LanguageRuntime {
             LanguageRuntime::PythonV2 => "python-v3",
             LanguageRuntime::PythonV3 => "python-v2",
             LanguageRuntime::JavaV8 => "java-v8",
-            LanguageRuntime::DynamicLibrary => "dynamic-library"
+            LanguageRuntime::DynamicLibrary => "dynamic-library",
         }
     }
 }
 
-static RUNTIME_DIRECTORY: &'static str = "tmp";
-
 pub fn create_runtime_fs() {
     match fs::create_dir(RUNTIME_DIRECTORY) {
         // FIXME: Ignore all error currently, we should only deal with permission denied error.
-        Err(err) => {},
+        Err(err) => {}
         Ok(_) => {}
     };
 }
 
 pub fn mount_nodejs_v8() {
-    match fs::create_dir(format!("{}/{}", RUNTIME_DIRECTORY, LanguageRuntime::NodeJsV8.to_str())) {
+    match fs::create_dir(format!(
+        "{}/{}",
+        RUNTIME_DIRECTORY,
+        LanguageRuntime::NodeJsV8.to_str()
+    )) {
         // FIXME: Ignore all error currently, we should only deal with permission denied error.
-        Err(err) => {},
+        Err(err) => {}
         Ok(_) => {}
     }
 }
 
 pub fn mount_language_codes(id: &Uuid, content: &str) {
-    let directory = format!("{}/{}/{}", RUNTIME_DIRECTORY, LanguageRuntime::NodeJsV8.to_str(), id);
+    let directory = format!(
+        "{}/{}/{}",
+        RUNTIME_DIRECTORY,
+        LanguageRuntime::NodeJsV8.to_str(),
+        id
+    );
     fs::create_dir(&directory);
     let mut file = File::create(format!("{}/index.js", directory)).unwrap();
     file.write_all(content.as_ref());
