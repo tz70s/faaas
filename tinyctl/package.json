@@ -12,7 +12,7 @@
   "author": "Tzu-Chiao Yeh",
   "license": "MIT",
   "dependencies": {
-    "commander": "^2.14.1",
-    "request": "^2.83.0"
+    "commander": "^2.15.1",
+    "request": "^2.85.0"
   }
 }
