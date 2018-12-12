@@ -1,6 +1,6 @@
-# FaaaS
+# microcall
 
-Experiment a fast invoker with various ways.
+Experiment fast workload invocation with various ways.
 
 ## Benchmark
 

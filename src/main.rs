@@ -1,24 +1,35 @@
-// The faaas project is under MIT License.
+// The microcall project is under MIT License.
 // Copyright (c) 2018 Tzu-Chiao Yeh
 
+extern crate env_logger;
 extern crate futures;
 extern crate futures_cpupool;
 extern crate hyper;
+#[macro_use]
+extern crate log;
 #[macro_use]
 extern crate serde_json;
 extern crate tokio_core;
 extern crate tokio_uds;
 extern crate uuid;
 
-mod controller;
-mod action_fs;
 mod action;
-mod config;
+mod action_container;
+mod constants;
+mod controller;
+
+/// Mount node.js runtime for invocation.
+/// It'll clean up existed file directory, create a new one and mount it.
+fn mount_node_runtime() {
+    // Create new runtime file directory.
+    action_container::create_runtime_container();
+    // Mount node.js runtime.
+    action_container::mount_nodejs_v8();
+}
 
 fn main() {
-    // Mount runtime fs
-    action_fs::clean_up();
-    action_fs::create_runtime_fs();
-    action_fs::mount_nodejs_v8();
+    env_logger::init();
+    info!("Starting up microcall runtime.");
+    mount_node_runtime();
     controller::launch("127.0.0.1:3000");
 }

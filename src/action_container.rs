@@ -1,11 +1,14 @@
-// The faaas project is under MIT License.
+// The microcall project is under MIT License.
 // Copyright (c) 2018 Tzu-Chiao Yeh
 
+use std::error::Error;
 use std::fs;
-use uuid::Uuid;
 use std::fs::File;
 use std::io::prelude::*;
-use config::RUNTIME_DIRECTORY;
+
+use uuid::Uuid;
+
+use constants::RUNTIME_DIRECTORY;
 
 #[allow(dead_code)]
 enum LanguageRuntime {
@@ -30,23 +33,36 @@ impl LanguageRuntime {
     }
 }
 
-pub fn create_runtime_fs() {
-    match fs::create_dir(RUNTIME_DIRECTORY) {
-        // FIXME: Ignore all error currently, we should only deal with permission denied error.
-        Err(err) => {}
-        Ok(_) => {}
+/// Remove existed file directory, and create a new one.
+pub fn create_runtime_container() {
+    // Check existed.
+    if let Err(err) = fs::remove_dir_all(RUNTIME_DIRECTORY) {
+        debug!(
+            "Runtime directory removing failed, {}",
+            err.description()
+        )
     };
+
+    if let Err(err) = fs::create_dir(RUNTIME_DIRECTORY) {
+        error!(
+            "error occurred while creating directory {}",
+            err.description()
+        );
+    }
 }
 
 pub fn mount_nodejs_v8() {
-    match fs::create_dir(format!(
+    let file_directory = format!(
         "{}/{}",
         RUNTIME_DIRECTORY,
         LanguageRuntime::NodeJsV8.to_str()
-    )) {
-        // FIXME: Ignore all error currently, we should only deal with permission denied error.
-        Err(err) => {}
-        Ok(_) => {}
+    );
+
+    if let Err(err) = fs::create_dir(file_directory) {
+        error!(
+            "error occurred while creating directory {}",
+            err.description()
+        );
     }
 }
 
@@ -57,11 +73,7 @@ pub fn mount_language_codes(id: &Uuid, content: &str) {
         LanguageRuntime::NodeJsV8.to_str(),
         id
     );
-    fs::create_dir(&directory);
+    fs::create_dir(&directory).unwrap();
     let mut file = File::create(format!("{}/index.js", directory)).unwrap();
-    file.write_all(content.as_ref());
-}
-
-pub fn clean_up() {
-    fs::remove_dir_all(RUNTIME_DIRECTORY).unwrap();
+    file.write_all(content.as_ref()).unwrap();
 }

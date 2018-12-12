@@ -1,17 +1,19 @@
-// The faaas project is under MIT License.
+// The microcall project is under MIT License.
 // Copyright (c) 2018 Tzu-Chiao Yeh
 
-use hyper::server::{Http, Service};
-use hyper::{Body, Client, Error, Get, Post, Request, Response, StatusCode};
-use tokio_core::reactor::Handle;
-use hyper;
+use std::collections::HashMap;
+use std::sync::{Arc, RwLock};
+
 use futures;
 use futures::{Future, Stream};
-use futures::future::{ok, FutureResult};
-use std::collections::HashMap;
-use uuid::Uuid;
-use std::sync::{Arc, RwLock};
+use futures::future::{FutureResult, ok};
+use hyper::{Body, Client, Error, Get, Post, Request, Response, StatusCode};
+use hyper;
+use hyper::server::{Http, Service};
 use tokio_core;
+use tokio_core::reactor::Handle;
+use uuid::Uuid;
+
 use action;
 
 #[derive(Debug)]
@@ -69,7 +71,7 @@ impl Service for Controller {
     type Request = Request;
     type Response = Response;
     type Error = Error;
-    type Future = Box<Future<Item = Self::Response, Error = Self::Error>>;
+    type Future = Box<Future<Item=Self::Response, Error=Self::Error>>;
 
     fn call(&self, req: Request) -> Self::Future {
         match (req.method(), req.path()) {
@@ -111,7 +113,7 @@ pub fn launch(addr_str: &str) {
             ))
         })
         .unwrap();
-    println!("Listening on http://{}", serve.incoming_ref().local_addr());
+    info!("Listening on http://{}", serve.incoming_ref().local_addr());
 
     let h2 = handle.clone();
     handle.spawn(
